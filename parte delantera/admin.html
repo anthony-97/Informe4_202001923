@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta content="IE=edge" http-equiv="X-UA-Compatible">
+  <meta content="width=device-width,initial-scale=1" name="viewport">
+  <meta content="description" name="description">
+  <meta name="google" content="notranslate" />
+  <meta content="Mashup templates have been developped by Orson.io team" name="author">
+
+  <!-- Disable tap highlight on IE -->
+  <meta name="msapplication-tap-highlight" content="no">
+  
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-icon-180x180.png">
+  <link href="./assets/favicon.ico" rel="icon">
+
+  <link href="" rel="stylesheet">
+
+
+  <title>Plataforma ECyS Administración</title>
+
+<link href="./main.550dcf66.css" rel="stylesheet"></head>
+
+<body> <!-- Add your content of header -->
+<header>
+  <nav class="navbar navbar-default active">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="./index.html" title="">
+          <img src="./assets/images/mashup-icon.svg" class="navbar-logo-img" alt="">
+          ECyS
+        </a>
+      </div>
+
+      <div class="collapse navbar-collapse" id="navbar-collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="./login.html" title="">Cerrar Sesión</a></li>
+          <li>
+          </li>
+        </ul>
+      </div> 
+    </div>
+  </nav>
+</header>
+
+<div id="layoutSidenav_content">
+  <main>
+      <div class="container-fluid">
+          <h1 class="mt-4">Publicaciones recientes</h1>
+          <div class="table-responsive" id="tabla3">
+
+          </div>
+          <div class="table-responsive" id="tabla4" style="visibility: hidden;">
+
+          </div>
+      </div>
+  </main>
+<script>
+  var antes = `<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+<thead>
+<tr>
+<th>Usuario</th>
+<th>Fecha</th>
+<th>Hora</th>
+<th>Curso</th>
+<th>Profesor</th>
+<th>Mensaje</th>
+</tr>
+</thead>
+<tbody>`
+  var despues = `</tbody>
+</table>`
+  let xhr = new XMLHttpRequest();
+  var ruta = "http://localhost:3000/obtener_usuarios";
+  xhr.open('GET', ruta);
+  xhr.send()
+  xhr.onreadystatechange = (e) => {
+      var usuarios = JSON.parse(xhr.responseText);
+      var cuerpo = "";
+      var cuerpo2 = "";
+      for (var i = 0; i<usuarios.length; i++) {
+          cuerpo += '<tr>';
+          cuerpo2 += '<tr>';
+          cuerpo += '<td>' + usuarios[i].autor + '</td>';
+          cuerpo2 += '<td>' + usuarios[i].autor + '</td>';
+          cuerpo += '<td>' + usuarios[i].fecha + '</td>';
+          cuerpo2 += '<td>' + usuarios[i].fecha + '</td>';
+          cuerpo += '<td>' + usuarios[i].hora + '</td>';
+          cuerpo2 += '<td>' + usuarios[i].hora + '</td>';
+          cuerpo += '<td>' + usuarios[i].curso + '</td>';
+          cuerpo2 += '<td>' + usuarios[i].curso + '</td>';
+          cuerpo += '<td>' + usuarios[i].profesor + '</td>';
+          cuerpo2 += '<td>' + usuarios[i].profesor + '</td>';
+          cuerpo += '<td>' + publicaciones[i].mensaje + '</td>';
+          cuerpo2 += '<td>' + publicaciones[i].mensaje + '</td>';
+          cuerpo += '<td><a type="button" class="btn btn-success" href="edit_doc.html?indice=' + i + '"><i class="fas fa-edit"></i></a></td>';
+          cuerpo += '<td><a type="button" class="btn btn-danger" href="eliminar_doc.html?indice=' + i + '">Eliminar</a></td>';
+          cuerpo += '</tr>';
+          cuerpo2 += '</tr>';
+          
+      }
+      document.getElementById("tabla3").innerHTML = antes + cuerpo + despues;
+      document.getElementById("tabla4").innerHTML = antes + cuerpo2 + despues;
+  }
+</script>
+
+  
+  <footer class="footer-container white-text-container">
+    <div class="container">
+      <div class="row">
+  
+       
+        <div class="col-xs-12">
+          <h3>UHospital</h3>
+  
+          <div class="row">
+            <div class="col-xs-12 col-sm-7">
+            <p><small>Departamento de Sistemas UHospital</small> 
+            <p><small>La Antigua Guatemala, Sacatepéquez, Guatemala</small>
+                <p><small><a href="index.html" title="Create website with free html template">Página de inicio</a></small>
+  
+              </p>
+            </div>
+            <div class="col-xs-12 col-sm-5">
+              <p class="text-right">
+                <a href="https://facebook.com/" class="social-round-icon white-round-icon fa-icon" title="">
+                  <i class="fa fa-facebook" aria-hidden="true"></i>
+                </a>
+                <a href="https://twitter.com/" class="social-round-icon white-round-icon fa-icon" title="">
+                  <i class="fa fa-twitter" aria-hidden="true"></i>
+                </a>
+                <a href="https://www.linkedin.com/" class="social-round-icon white-round-icon fa-icon" title="">
+                  <i class="fa fa-linkedin" aria-hidden="true"></i>
+                </a>
+              </p>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </footer>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function (event) {
+    navActivePage();
+    scrollRevelation('.reveal');
+  });
+</script>
+
+--> <script type="text/javascript" src="./main.0cf8b554.js"></script></body>
+
+</html>

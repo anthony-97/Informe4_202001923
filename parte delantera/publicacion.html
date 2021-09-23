@@ -108,13 +108,14 @@
           </main>
 <script>
   function publicar(){
+                      var d= new Date()
                       actual = getParametro("n")
                       let xhr = new XMLHttpRequest();
                       var ruta = "http://localhost:3000/crear_publicacion";
                       let json = JSON.stringify({
                           autor: actual,
-                          fecha: "22/09/2021",
-                          hora: "17:00",
+                          fecha: d.getDate()+"/"+d.getMonth()+"/"+d.getUTCFullYear(),
+                          hora: d.getHours() + ":" + d.getMinutes(),
                           curso: document.getElementById("curso").value,
                           profesor: document.getElementById("profesor").value,
                           mensaje: document.getElementById("mensaje").value,
