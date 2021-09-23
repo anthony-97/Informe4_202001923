@@ -4,6 +4,25 @@ import json
 import os
 from usuario import Usuario
 from publicacion import Publicacion
+import sqlite3
+
+miconexion=sqlite3.connect("Profesores")
+micursor=miconexion.cursor()
+#micursor.execute("CREATE TABLE PROFESORES (NOMBRE VARCHAR(400))")
+micursor.execute("INSERT INTO PROFESORES VALUES('Carlos Alberto Molina Jerez')")
+micursor.execute("INSERT INTO PROFESORES VALUES('Luis Alberto Lopez Marquez')")
+micursor.execute("INSERT INTO PROFESORES VALUES('Gerson Melciades Estrada Cabrera')")
+micursor.execute("INSERT INTO PROFESORES VALUES('Alicia Estefany Garcia Aguilar')")
+micursor.execute("INSERT INTO PROFESORES VALUES('Juan Federico Martinez Pelaez')")
+micursor.execute("INSERT INTO PROFESORES VALUES('Mariana Andrea del Cid')")
+micursor.execute("INSERT INTO PROFESORES VALUES('Mario Alfredo Valle Martinez')")
+micursor.execute("INSERT INTO PROFESORES VALUES('Luz Maria Rogel Nimajuan')")
+micursor.execute("INSERT INTO PROFESORES VALUES('Antonio Javier Galvez Perez')")
+
+micursor.execute("SELECT * FROM PROFESORES")
+varios=micursor.fetchall()
+miconexion.commit()
+miconexion.close()
 
 app = Flask(__name__)
 CORS(app)
