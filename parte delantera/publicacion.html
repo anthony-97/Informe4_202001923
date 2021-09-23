@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta content="IE=edge" http-equiv="X-UA-Compatible">
+        <meta content="width=device-width,initial-scale=1" name="viewport">
+        <meta content="description" name="description">
+        <meta name="google" content="notranslate" />
+        <meta content="Mashup templates have been developped by Orson.io team" name="author">
+      
+        <meta name="msapplication-tap-highlight" content="no">
+        <link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-icon-180x180.png">
+        <link href="./assets/favicon.ico" rel="icon">
+      
+        <link href="" rel="stylesheet">
+      
+      
+        <title>Generador de Recetas</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+      
+      <link href="./main.550dcf66.css" rel="stylesheet"></head>
+      
+      <body> <!-- Add your content of header -->
+      <header>
+        <nav class="navbar navbar-default active">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="./index.html" title="">
+                <img src="./assets/images/logo ECyS.jpg" width="300" class="navbar-logo-img" alt="">
+                
+              </a>
+            </div>
+      
+            <div class="collapse navbar-collapse" id="navbar-collapse">
+              <ul class="nav navbar-nav navbar-right">
+                <li><a onclick="volver()" title="">Volver a la Administración</a></li>
+                <li><a href="./login.html" title="">Cerrar Sesión</a></li>
+                <li>
+                </li>
+              </ul>
+            </div> 
+          </div>
+        </nav>
+      </header>
+      
+      <div class="section-container">
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-12 col-md-8 col-md-offset-2">
+              <h1 class="text-center">Crear publicación</h1>
+              <body onLoad="escribir()"></body>
+           </div>
+          </div>
+        
+            </div>
+          </div>
+        </div>
+      </div>
+      <script>
+      function getParametro(nombre) {
+          return (window.location.search.match(new RegExp('[?&]' + nombre + '=([^&]+)')) || [, null])[1];
+      }
+      function volver() {
+          window.location.href = "usuario.html?n=" + getParametro("n")
+        }
+  </script>
+</head>
+
+      <div id="layoutSidenav_content">
+          <main>
+              <div class="container-fluid">
+                  <div id="solicitar">
+                      <form>
+                          <div class="form-row">
+                              <div class="col-md-6">
+                                  <div class="form-group">
+                                      <label class="small mb-1" for="inputFirstName">Curso</label>
+                                      <input class="form-control py-4" id="curso" type="text"
+                                          placeholder="Ingrese el nombre de un curso" />
+                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <div class="form-group">
+                                      <label class="small mb-1" for="inputLastName">Profesor</label>
+                                      <input class="form-control py-4" id="profesor" type="text"
+                                          placeholder="Ingresa el nombre de un profesor" />
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label class="small mb-1" for="inputEmailAddress">Mensaje</label>
+                              <input class="form-control py-4" id="mensaje" type="text" placeholder="Ingresa una reseña" />
+                          </div>
+                          <div class="form-group mt-4 mb-0"><a class="btn btn-primary btn-block"
+                                  onclick="publicar()">Publicar</a></div>
+                      </form>
+                  </div>
+              </div>
+          </main>
+<script>
+  function publicar(){
+                      actual = getParametro("n")
+                      let xhr = new XMLHttpRequest();
+                      var ruta = "http://localhost:3000/crear_publicacion";
+                      let json = JSON.stringify({
+                          autor: actual,
+                          fecha: "22/09/2021",
+                          hora: "17:00",
+                          curso: document.getElementById("curso").value,
+                          profesor: document.getElementById("profesor").value,
+                          mensaje: document.getElementById("mensaje").value,
+                      })
+                      console.log(json)
+                      const c = document.getElementById("curso").value
+                      const p = document.getElementById("profesor").value
+                      alert(actual+ ", se ha publicado exitosamente")
+                      xhr.open("POST",ruta)
+                      xhr.setRequestHeader('Content-type', 'application/json; charset= utf-8')
+                      xhr.send(json)
+                      regresar()
+                  }
+              </script>
+
+<script>
+    function regresar() {
+          window.location.href = "usuario.html?&n=" + getParametro("n")
+        }
+</script>
+
+        <div id="layoutAuthentication_footer">
+            <footer class="footer-container white-text-container">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <h3>Escuela de Ingeniería en Ciencias y Sistemas</h3>
+              
+                      <div class="row">
+                        <div class="col-xs-12 col-sm-7">
+                        <p><small>Facultad de Ingeniería, USAC</small> 
+                        <p><small>Edificio T3 Ciudad Universitaria zona 12, Ciudad de Guatemala</small>
+                            <p><small><a href="login.html" title="Create website with free html template">Página de inicio</a></small>
+              
+                          </p>
+                        </div>
+                        <div class="col-xs-12 col-sm-5">
+                          <p class="text-right">
+                            <a href="https://facebook.com/" class="social-round-icon white-round-icon fa-icon" title="">
+                              <i class="fa fa-facebook" aria-hidden="true"></i>
+                            </a>
+                            <a href="https://twitter.com/" class="social-round-icon white-round-icon fa-icon" title="">
+                              <i class="fa fa-twitter" aria-hidden="true"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/" class="social-round-icon white-round-icon fa-icon" title="">
+                              <i class="fa fa-linkedin" aria-hidden="true"></i>
+                            </a>
+                          </p>
+                        </div>
+                      </div>
+                      
+                    </div>
+                  </div>
+                </div>
+              </footer>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+    <script src="js/scripts.js"></script>
+</body>
+
+</html>

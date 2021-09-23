@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>ECyS Registrarse</title>
+        <link href="css/styles.css" rel="stylesheet" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
+    </head>
+    <body class="bg-primary">
+        <div id="layoutAuthentication">
+            <div id="layoutAuthentication_content">
+                <center><a class="navbar-brand" href="./index.html" title="" style="color:white">
+                    <img src="./assets/images/logo ECyS.jpg" width="300" class="navbar-logo-img" alt="">
+                    
+                  </a></center>
+                <main>
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-7">
+                                <div class="card shadow-lg border-0 rounded-lg mt-5">
+                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Crea una cuenta</h3></div>
+                                    <div class="card-body">
+                                        <form>
+                                            <div class="form-row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="small mb-1" for="inputFirstName">Registro Académico</label>
+                                                        <input class="form-control py-4" id="carnet" type="text" placeholder="Ingresa tu registro académico" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="small mb-1" for="inputLastName">Nombres</label>
+                                                        <input class="form-control py-4" id="nombres" type="text" placeholder="Ingresa tus nombres" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="small mb-1" for="inputDate">Apellidos</label>
+                                                        <input class="form-control py-4" id="apellidos" type="text" placeholder="Ingresa tus apellidos" />
+                                                    </div>
+                                                </div>   
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="small mb-1" for="inputG">Correo Electrónico</label>
+                                                        <input class="form-control py-4" id="correo" type="text" placeholder="Ingresa un correo electrónico" />
+                                                    </div>
+                                                </div>          
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="small mb-1" for="inputG">Contraseña</label>
+                                                        <input class="form-control py-4" id="contra" type="password" placeholder="Crea una contraseña" />
+                                                    </div>
+                                                </div>                                              
+                                            </div>
+                                            <div class="form-group mt-4 mb-0"><a class="btn btn-primary btn-block" onclick="crear()">Crear cuenta</a></div>
+                                        </form>
+                                    </div>
+                                    <div class="card-footer text-center">
+                                        <div class="small"><a href="login.html">¿Ya tienes una cuenta? Ir al inicio de sesión</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+            <script>
+function crear(){
+                    let xhr = new XMLHttpRequest();
+                    var ruta = "http://localhost:3000/registro_usuario";
+                    let json = JSON.stringify({
+                        carnet: document.getElementById("carnet").value,
+                        nombres: document.getElementById("nombres").value,
+                        apellidos: document.getElementById("apellidos").value,
+                        correo: document.getElementById("correo").value,
+                        contrasena: document.getElementById("contra").value,
+                    })
+                    console.log(json)
+                    const nmbr = document.getElementById("nombres").value
+                    const usr = document.getElementById("carnet").value
+                    alert("Usuario " + nmbr + " te has registrado exitosamente. Tu registro académico es: " + usr)
+                    xhr.open("POST",ruta)
+                    xhr.setRequestHeader('Content-type', 'application/json; charset= utf-8')
+                    xhr.send(json)
+                }
+            </script>
+            <p></p>
+            <div id="layoutAuthentication_footer">
+                <footer class="py-4 bg-light mt-auto">
+                    <div class="container-fluid">
+                        <div class="d-flex align-items-center justify-content-between small">
+                            <div class="text-muted">Escuela de Ciencias y Sistemas 2021</div>
+                            <div>
+                                <a href="login.html">Regresar al inicio</a>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="js/scripts.js"></script>
+    </body>
+</html>
