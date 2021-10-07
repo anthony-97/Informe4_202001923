@@ -4,25 +4,8 @@ import json
 import os
 from usuario import Usuario
 from publicacion import Publicacion
-import sqlite3
+from random import randint
 
-miconexion=sqlite3.connect("Profesores")
-micursor=miconexion.cursor()
-#micursor.execute("CREATE TABLE PROFESORES (NOMBRE VARCHAR(400))")
-micursor.execute("INSERT INTO PROFESORES VALUES('Carlos Alberto Molina Jerez')")
-micursor.execute("INSERT INTO PROFESORES VALUES('Luis Alberto Lopez Marquez')")
-micursor.execute("INSERT INTO PROFESORES VALUES('Gerson Melciades Estrada Cabrera')")
-micursor.execute("INSERT INTO PROFESORES VALUES('Alicia Estefany Garcia Aguilar')")
-micursor.execute("INSERT INTO PROFESORES VALUES('Juan Federico Martinez Pelaez')")
-micursor.execute("INSERT INTO PROFESORES VALUES('Mariana Andrea del Cid')")
-micursor.execute("INSERT INTO PROFESORES VALUES('Mario Alfredo Valle Martinez')")
-micursor.execute("INSERT INTO PROFESORES VALUES('Luz Maria Rogel Nimajuan')")
-micursor.execute("INSERT INTO PROFESORES VALUES('Antonio Javier Galvez Perez')")
-
-micursor.execute("SELECT * FROM PROFESORES")
-varios=micursor.fetchall()
-miconexion.commit()
-miconexion.close()
 
 app = Flask(__name__)
 CORS(app)
@@ -30,13 +13,17 @@ CORS(app)
 administrador = {
     "nombres":"Anthony Alexander",
     "apellidos":"Aquino Santiago",
-    "carnet":"202001923",
+    "carnet":"2020",
     "contrasena":"admin"
 }
-
 usuarios = []
 publicaciones = []
-
+u1= Usuario("2021","Melany", "Salazar","anthony", "mely123@gmail.com", randint(10,200))
+u2= Usuario("202001923","Anthony Alexander", "Aquino Santiago","mel", "anthony97@gmail.com", randint(10,200))
+u3= Usuario("2008","Luis", "Morales","polares", "ls@gmail.com", randint(30,200))
+usuarios.append(u1)
+usuarios.append(u2)
+usuarios.append(u3)
 
 @app.route('/', methods=['GET'])
 def principal():
@@ -50,7 +37,7 @@ def registro_usuario():
     apellidos = cuerpo['apellidos']
     contrasena = cuerpo['contrasena']
     correo = cuerpo['correo']
-    nuevo_usuario = Usuario(carnet,nombres,apellidos,contrasena,correo)
+    nuevo_usuario = Usuario(carnet,nombres,apellidos,contrasena,correo,randint(10,200))
     global usuarios
     usuarios.append(nuevo_usuario)
     return jsonify({'agregado':1,'mensaje':'Registro exitoso'})
@@ -69,14 +56,9 @@ def editar_usuario():
     cuerpo = request.get_json()
     carnet = cuerpo['carnet'] 
     contrasena = cuerpo['contrasena']
-    contador=0
-    global usuarios
-    for u in usuarios:
-        if u.carnet == carnet:
-            break
-        contador+=1
-    usuarios[contador].recuperar(carnet,contrasena)
-    return jsonify(usuarios[contador].get_json())
+    for usuario in usuarios:
+        if usuario.carnet == carnet:
+            usuario.contrasena = contrasena
 
 def verificar_contrasena(carnet, contrasena):
     if carnet == administrador['carnet'] and contrasena == administrador['contrasena']:
@@ -95,7 +77,7 @@ def login():
         return jsonify({'estado': -1,'mensaje':'No existe este usuario'})
     sesion = verificar_contrasena(carnet,contrasena)
     if sesion == 1 or 2 or 0:
-        return jsonify({'estado': 1, 'sesion': sesion, 'mensaje':'Login exitoso','indice': get_indice_usuario(carnet), 'nombres': get_nombre(carnet)})
+        return jsonify({'estado': 1, 'sesion': sesion, 'carnet': carnet, 'mensaje':'Login exitoso','indice': get_indice_usuario(carnet), 'nombres': get_nombre(carnet)})
     return jsonify({'estado': 0, 'sesion': sesion,'mensaje':'La contrasena es incorrecta'})
 
 def get_indice_usuario(carnet):
@@ -123,20 +105,25 @@ def existe_usuario(carnet):
 def restablecer_usuario():
     carnet = request.args.get("carnet")
     correo = request.args.get("correo")
+    contador=0
     for usuario in usuarios:
-        if usuario.carnet == carnet and usuario.correo == correo:
+        contador+=1
+        if str(usuario.carnet) == str(carnet) and str(usuario.correo) == str(correo):
+            print("Si")
             return jsonify({'encontrado':1,'usuario': usuario.nombres,'mensaje':'Usuario encontrado'})
-            break
         else:
-            return jsonify({'encontrado':0, 'mensaje':'Usuario no encontrado'})
+            if contador==len(usuarios):
+                return jsonify({'encontrado':0, 'mensaje':'Usuario no encontrado'})
+            else:
+                continue
 
 @app.route('/obtener_publicaciones', methods=['GET'])
 def obtener_publicaciones():
-    json_citas = []
-    global citas
+    json_pubs = []
+    global publicaciones
     for publicacion in publicaciones:
-        json_citas.append(publicacion.get_json())
-    return jsonify(json_citas)
+        json_pubs.append(publicacion.get_json())
+    return jsonify(json_pubs)
 
 @app.route('/crear_publicacion', methods=['POST'])
 def crear_publicacion():
@@ -148,9 +135,34 @@ def crear_publicacion():
     profesor = cuerpo['profesor']
     mensaje = cuerpo['mensaje']
     nueva_publicacion = Publicacion(autor,fecha,hora,curso,profesor,mensaje)
-    global citas
+    global publicaciones
     publicaciones.append(nueva_publicacion)
     return jsonify({'agregado':1,'mensaje':'Publicada exitosamente'})
+
+@app.route('/buscar', methods=['GET'])
+def buscar():
+    carnet = request.args.get("carnet")
+    if not existe_usuario(carnet):
+        return jsonify({'estado': -1,'mensaje':'No existe este usuario'})
+    else:
+        encontrado=buscarC(carnet)
+        return jsonify({'estado': 1, 'carnet':encontrado[0], 'nombres': encontrado[1], 'apellidos':encontrado[2],'correo':encontrado[3], 'creditos':encontrado[4]})
+
+def buscarC(carnet):
+    global usuarios
+    print(carnet)
+    for usuario in usuarios:
+        if usuario.carnet==carnet:
+            print("Se encontro")
+            json_usuarios=[]
+            json_usuarios.append(usuario.carnet)
+            json_usuarios.append(usuario.nombres)
+            json_usuarios.append(usuario.apellidos)
+            json_usuarios.append(usuario.correo)
+            json_usuarios.append(str(usuario.creditos))
+            print(json_usuarios)
+    return json_usuarios
+
 
 if __name__ == '__main__':
     puerto = int(os.environ.get('PORT', 3000))
