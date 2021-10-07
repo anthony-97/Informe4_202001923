@@ -53,10 +53,10 @@
             </div>
             <script>
                 function recuperar() {
-                    const user = document.getElementById('carnet').value;
+                    const carnet = document.getElementById('carnet').value;
                     const correo = document.getElementById('correo').value;
                     const url = 'http://localhost:3000/';
-                    const ruta = url + "restablecer_usuario?carnet=" + user + "&correo=" + correo;
+                    const ruta = url + "restablecer_usuario?carnet=" + carnet + "&correo=" + correo;
                    // alert("usuario " + user )
                     fetch(ruta)
                         .then((resp) => resp.json())
@@ -65,7 +65,7 @@
                             //data = {"estado":X,"mensaje":X}
                             if(data.encontrado == 1){
                                 alert(data.mensaje)
-                                window.location.href = "recuperacion.html?carnet=" + user
+                                window.location.href = "recuperacion.html?carnet=" + carnet
                             }
                             if (data.encontrado == 0) {
                                 alert(data.mensaje)

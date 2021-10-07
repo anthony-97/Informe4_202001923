@@ -14,8 +14,7 @@
         <div id="layoutAuthentication">
             <div id="layoutAuthentication_content">
                 <center><a class="navbar-brand" href="./index.html" title="" style="color:white">
-                    <img src="./assets/images/mashup-icon.svg" class="navbar-logo-img" alt="">
-                    ECyS
+                    <img src="./assets/images/logo ECyS.jpg" width="300" class="navbar-logo-img" alt="">
                   </a></center>
                 <main>
                     <div class="container">
@@ -46,28 +45,6 @@
                 </main>
             </div>
 <script>
-            function editar_usuario() {
-                let json = JSON.stringify({
-                    carnet: getParametro("carnet"),
-                    contrasena: document.getElementById("contrasena").value
-                })
-                let respuesta = await fetch("http://localhost:3000/editar_usuario", {
-                    method: 'POST',
-                    body: json,
-                    headers: { 'Content-Type': 'application/json' }
-                }).catch(function (error) {
-                    console.log(error)
-                });
-                window.location.href = "login.html"
-            }
-            </script>
-            <script>
-                function getParametro(nombre) {
-                    return (window.location.search.match(new RegExp('[?&]' + nombre + '=([^&]+)')) || [, null])[1];
-                }
-            </script>
-
-<script>
     function getParametro(nombre) {
         return (window.location.search.match(new RegExp('[?&]' + nombre + '=([^&]+)')) || [, null])[1];
     }
@@ -76,7 +53,7 @@
         let json = JSON.stringify({
             carnet: getParametro("carnet"),
             contrasena: document.getElementById("contrasena").value
-        })
+        }) 
         let respuesta = await fetch("http://localhost:3000/editar_usuario", {
             method: 'POST',
             body: json,
@@ -85,6 +62,9 @@
             console.log(error)
         });
         window.location.href = "login.html"
+        carnet = getParametro("carnet")
+        contrasena = document.getElementById("contrasena").value
+        alert(carnet + " tu nueva contraseña es: " + contrasena)
     }
 </script>
             <div id="layoutAuthentication_footer">
